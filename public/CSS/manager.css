@@ -1,0 +1,292 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #d86404;
+}
+
+/* KGL app message and banner classes */
+.msg {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.msg-error {
+    color: #a94442;
+    background: #f8d7da;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.msg-success {
+    color: #155724;
+    background: #d4edda;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.banner {
+    padding: 12px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.banner-error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Small utility classes */
+.hidden {
+    display: none !important;
+}
+
+.kgl-gold {
+    color: var(--kgl-gold);
+}
+
+.small-uppercase {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+}
+
+.chart-area {
+    height: 320px;
+}
+
+.table-heading {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #666;
+}
+
+/* Manager page styles (moved from manager.html) */
+:root {
+    --kgl-dark: #cff4f4;
+    --kgl-green: #10b04e;
+    --kgl-bg: #f8f9fa;
+     --kgl-nav-bg: #209b45ab;
+}
+
+.manager-body {
+    background-color: var(--kgl-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--kgl-nav-bg);
+    min-height: 100vh;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+    width: 16.666667%;
+    z-index: 1000;
+}
+
+.sidebar img {
+    display: block;
+}
+
+.sidebar .manager-brand {
+    text-align: center;
+}
+
+.sidebar .manager-logo {
+    width: 82px;
+    height: 82px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 6px;
+    display: block;
+}
+
+.nav-link {
+    color: #000;
+    padding: 12px 20px;
+    min-height: 44px;
+    font-size: 0.98rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000 !important;
+    text-decoration: none;
+    border-left: none;
+    border-radius: 0 18px 18px 0;
+    margin-right: 15px;
+}
+
+.nav-link.active {
+    background-color: var(--kgl-green);
+    color: #000 !important;
+    font-weight: 600;
+    border-radius: 0 25px 25px 0;
+    margin-right: 15px;
+}
+
+.main-wrapper {
+    margin-left: 16.666667%;
+}
+
+.main-content {
+    padding: 40px;
+}
+
+.form-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.section-title {
+    color: #0d6efd;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+}
+
+.top-header {
+    background: white;
+    padding: 12px 40px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hidden-section {
+    display: none;
+}
+
+.logout-box {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Prices & inventory small helpers */
+.price-input {
+    max-width: 100%;
+}
+
+/* Sidebar logout placement */
+.sidebar .logout-box {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.sidebar .logout-box .btn {
+    width: 100%;
+}
+
+/* Suppliers section improvements */
+.suppliers-section .form-container {
+    padding-bottom: 8px;
+}
+
+.suppliers-section .table-responsive {
+    max-height: 320px;
+    overflow: auto;
+}
+
+.suppliers-section table thead th {
+    background: #f8f9fc;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* Ensure logout button contrast on dark sidebar */
+.sidebar .btn-outline-light {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar .logout-btn {
+    background: #b42318;
+    border: 1px solid #7a1b12;
+    color: #fff;
+    font-weight: 700;
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.sidebar .logout-btn:hover,
+.sidebar .logout-btn:focus {
+    background: #8f1d14;
+    border-color: #6d1911;
+    color: #fff;
+}

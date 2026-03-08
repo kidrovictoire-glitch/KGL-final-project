@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Karibu Groceries LTD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/styleIndex.css">
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="right-panel">
+      <form id="loginForm" class="login-form">
+        <img src="Images/kgl-logo.jpg" alt="KGL logo" class="login-logo">
+        <h1 class="brand-title" style="color: #08772f"><b> KARIBU<br>GROCERIES LTD</b></h1>
+        <h2 class="form-title">Login Account</h2>
+
+        <div class="input-group"><input type="text" id="username" name="username" placeholder="Staff Name" required>
+        </div>
+        <div class="input-group"><input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="input-group password-tools">
+          <label><input type="checkbox" id="togglePassword"> Show Password</label>
+        </div>
+        <div class="form-footer">
+          <label><input type="checkbox"> Keep me signed in</label>
+          <a href="#" id="forgotPasswordLink" class="member-link">Forgot Password?</a>
+        </div>
+        <div id="forgotPasswordHelp" class="forgot-help" style="display:none;">
+          If you forgot your password, contact the Director (Mr. Orban) to reset your account in User Management.
+          <br>
+          <a href="mailto:director@kgl.com?subject=Password%20Reset%20Request&body=Hello%20Director%2C%20I%20forgot%20my%20password.%20Please%20help%20reset%20my%20account.%0A%0AName%3A%20%0ABranch%3A%20">Email Director for Password Reset</a>
+        </div>
+
+        <button type="submit" class="btn-subscribe">LOGIN</button>
+        <div id="loginMsg" class="msg"></div>
+      </form>
+      <p class="copyright">&copy; 2026 Karibu Groceries LTD</p>
+    </div>
+  </div>
+
+  <script src="js/api-index.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
