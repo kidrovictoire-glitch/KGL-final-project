@@ -1,12 +1,28 @@
 (function () {
-      const role = localStorage.getItem('role');
-      if (role !== 'manager' || (localStorage.getItem('accountRole') && localStorage.getItem('accountRole') !== 'manager')) {
+      function validSession() {
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        const accountRole = localStorage.getItem('accountRole');
+        const branch = localStorage.getItem('branch');
+        return !!token && role === 'manager' && (!accountRole || accountRole === 'manager') && !!branch && branch !== 'All';
+      }
+      function redirectToLogin() {
+        window.location.replace('index.html');
+      }
+      function guardSession() {
+        if (validSession()) return;
         const b = document.createElement('div');
         b.className = 'banner banner-error';
         b.innerText = 'Access denied: manager role required. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(redirectToLogin, 300);
       }
+      window.addEventListener('pageshow', guardSession);
+      window.addEventListener('popstate', guardSession);
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') guardSession();
+      });
+      guardSession();
     })();
 
     const PRODUCE = {
@@ -121,7 +137,7 @@
     function formatUgx(v) { return 'UGX ' + (Number(v) || 0).toLocaleString(); }
     function logoutNow() {
       window.KGLApi.logout();
-      window.location.href = 'index.html';
+      window.location.replace('index.html');
     }
 
     function renderRecordTables() {
@@ -764,7 +780,7 @@
         b.className = 'banner banner-error';
         b.innerText = 'Session expired. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(() => window.location.replace('index.html'), 300);
         return;
       }
       initData();

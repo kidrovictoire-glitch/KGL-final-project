@@ -89,6 +89,13 @@ The app runs by default at:
 - Reports: `http://localhost:5000/reports.html`
 - Swagger docs: `http://localhost:5000/api-docs`
 
+## Authentication Behavior
+
+- Login stores JWT session data in browser storage.
+- Protected pages (`director`, `manager`, `agent`, `reports`) enforce role/session checks on load, browser back/forward restore, and tab refocus.
+- Logout clears session data and uses history-safe redirects (`location.replace`) to prevent returning to protected pages via browser Back.
+- Server sends no-cache headers for protected HTML pages and `/api/*` routes to reduce cached-page session bypass.
+
 ## Default Seeded Accounts
 
 These accounts are seeded on startup if missing:

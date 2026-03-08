@@ -471,6 +471,18 @@ app.get("/api/state", auth(), async (req, res) => {
 });
 
 const publicDir = path.join(__dirname, "public");
+const NO_CACHE_HTML_PATHS = new Set(["/agent.html", "/manager.html", "/director.html", "/reports.html"]);
+
+app.use((req, res, next) => {
+  if (NO_CACHE_HTML_PATHS.has(req.path) || req.path.startsWith("/api/")) {
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.set("Pragma", "no-cache");
+    res.set("Expires", "0");
+    res.set("Surrogate-Control", "no-store");
+  }
+  next();
+});
+
 if (require("fs").existsSync(publicDir)) {
   app.use(express.static(publicDir));
 }

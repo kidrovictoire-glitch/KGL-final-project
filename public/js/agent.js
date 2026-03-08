@@ -1,12 +1,28 @@
 (function () {
-      const role = localStorage.getItem('role');
-      if (role !== 'agent' || (localStorage.getItem('accountRole') && localStorage.getItem('accountRole') !== 'agent') || !localStorage.getItem('branch') || localStorage.getItem('branch') === 'All') {
+      function validSession() {
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        const accountRole = localStorage.getItem('accountRole');
+        const branch = localStorage.getItem('branch');
+        return !!token && role === 'agent' && (!accountRole || accountRole === 'agent') && !!branch && branch !== 'All';
+      }
+      function redirectToLogin() {
+        window.location.replace('index.html');
+      }
+      function guardSession() {
+        if (validSession()) return;
         const b = document.createElement('div');
         b.className = 'banner banner-error';
         b.innerText = 'Access denied: agent role required. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(redirectToLogin, 300);
       }
+      window.addEventListener('pageshow', guardSession);
+      window.addEventListener('popstate', guardSession);
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') guardSession();
+      });
+      guardSession();
     })();
 
     const PRODUCE = {
@@ -23,7 +39,7 @@
     function prices() { return JSON.parse(localStorage.getItem('prices') || '{}'); }
     function logoutNow() {
       window.KGLApi.logout();
-      window.location.href = 'index.html';
+      window.location.replace('index.html');
     }
 
     function showMsg(id, text, type = 'error', timeout = 3500) {
@@ -344,7 +360,7 @@
         b.className = 'banner banner-error';
         b.innerText = 'Session expired. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(() => window.location.replace('index.html'), 300);
         return;
       }
       const uname = localStorage.getItem('username') || 'Agent';

@@ -1,10 +1,32 @@
+function isValidSession() {
+      const token = localStorage.getItem('token');
+      const role = (localStorage.getItem('role') || '').toLowerCase();
+      const accountRole = (localStorage.getItem('accountRole') || '').toLowerCase();
+      return !!token && !!role && (!accountRole || accountRole === role);
+    }
+
+    function guardSession() {
+      if (isValidSession()) return;
+      window.location.replace('index.html');
+    }
+
+    window.addEventListener('pageshow', guardSession);
+    window.addEventListener('popstate', guardSession);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') guardSession();
+    });
+    guardSession();
+
 function logoutNow() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-      localStorage.removeItem('accountRole');
-      localStorage.removeItem('username');
-      localStorage.removeItem('branch');
-      window.location.href = 'index.html';
+      if (window.KGLApi && typeof window.KGLApi.logout === 'function') window.KGLApi.logout();
+      else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('accountRole');
+        localStorage.removeItem('username');
+        localStorage.removeItem('branch');
+      }
+      window.location.replace('index.html');
     }
 
     document.getElementById('currentDate').innerText = new Date().toDateString();

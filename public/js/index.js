@@ -69,9 +69,9 @@ const PRODUCE = ['Beans', 'Grain Maize', 'Cow Peas', 'G-nuts', 'Soybeans'];
         localStorage.setItem('branch', accountRole === 'director' ? 'All' : result.user.branch);
         await window.KGLApi.syncState();
 
-        if (accountRole === 'director') window.location.href = 'director.html';
-        else if (accountRole === 'manager') window.location.href = 'manager.html';
-        else window.location.href = 'agent.html';
+        if (accountRole === 'director') window.location.replace('director.html');
+        else if (accountRole === 'manager') window.location.replace('manager.html');
+        else window.location.replace('agent.html');
       } catch (err) {
         showLoginMsg(err.message || 'Login failed. Check your credentials or server connection.');
       }

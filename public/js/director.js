@@ -1,12 +1,27 @@
 (function () {
-      const role = localStorage.getItem('role');
-      if (role !== 'director') {
+      function validSession() {
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        const branch = localStorage.getItem('branch');
+        return !!token && role === 'director' && (!branch || branch === 'All');
+      }
+      function redirectToLogin() {
+        window.location.replace('index.html');
+      }
+      function guardSession() {
+        if (validSession()) return;
         const b = document.createElement('div');
         b.className = 'banner banner-error';
         b.innerText = 'Access denied: director role required. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(redirectToLogin, 300);
       }
+      window.addEventListener('pageshow', guardSession);
+      window.addEventListener('popstate', guardSession);
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') guardSession();
+      });
+      guardSession();
     })();
 
     const PRODUCE = ['Beans', 'Grain Maize', 'Cow Peas', 'G-nuts', 'Soybeans'];
@@ -320,7 +335,7 @@
 
     function logoutNow() {
       window.KGLApi.logout();
-      window.location.href = 'index.html';
+      window.location.replace('index.html');
     }
 
     async function boot() {
@@ -352,7 +367,7 @@
         b.className = 'banner banner-error';
         b.innerText = 'Session expired. Redirecting to login...';
         document.body.insertBefore(b, document.body.firstChild);
-        setTimeout(() => window.location.href = 'index.html', 1400);
+        setTimeout(() => window.location.replace('index.html'), 300);
       }
     }
 
