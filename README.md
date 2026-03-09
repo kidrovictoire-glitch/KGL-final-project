@@ -95,7 +95,6 @@ The app runs by default at:
 - Protected pages (`director`, `manager`, `agent`, `reports`) enforce role/session checks on load, browser back/forward restore, and tab refocus.
 - Logout clears session data and uses history-safe redirects (`location.replace`) to prevent returning to protected pages via browser Back.
 - Server sends no-cache headers for protected HTML pages and `/api/*` routes to reduce cached-page session bypass.
-
 ## Default Seeded Accounts
 
 These accounts are seeded on startup if missing:
