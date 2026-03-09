@@ -26,8 +26,15 @@
         headers: headers(),
         body: body ? JSON.stringify(body) : undefined
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.message || "Request failed");
+      const contentType = String(res.headers.get("content-type") || "").toLowerCase();
+      const rawText = await res.text();
+      let data = {};
+      if (rawText && contentType.includes("application/json")) {
+        data = JSON.parse(rawText);
+      } else if (rawText && !contentType.includes("application/json")) {
+        throw new Error("Server returned non-JSON response. Deploy backend as a Render Web Service (or set API base URL).");
+      }
+      if (!res.ok) throw new Error((data && data.message) || `Request failed (${res.status})`);
       return data;
     } catch (err) {
       if (err && err.message === "Failed to fetch") {

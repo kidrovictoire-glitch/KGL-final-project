@@ -62,7 +62,7 @@ const PRODUCE = ['Beans', 'Grain Maize', 'Cow Peas', 'G-nuts', 'Soybeans'];
       try {
         const result = await window.KGLApi.login({ username, password });
         if (!result || !result.user || !result.user.role || !result.token) {
-          throw new Error('Unexpected login response from server.');
+          throw new Error('Login response is missing user/token. Ensure /api/auth/login is served by your backend.');
         }
         const accountRole = normalize(result.user.role);
         localStorage.setItem('token', result.token);

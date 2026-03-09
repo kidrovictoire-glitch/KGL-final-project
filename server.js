@@ -26,6 +26,7 @@ const app = express();
 const PORT = Number(process.env.PORT || 5000);
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/kgl_db";
+const IS_LOCAL_MONGO_URI = /^mongodb:\/\/(127\.0\.0\.1|localhost)/i.test(MONGODB_URI);
 
 const BRANCHES = ["Maganjo", "Matugga"];
 const PRODUCE = {
@@ -557,12 +558,19 @@ async function seedDefaults() {
 }
 
 async function cleanupLegacyUserIndexes() {
-  const userCollection = mongoose.connection.collection("users");
-  const indexes = await userCollection.indexes();
-  const legacyEmailIndex = indexes.find((idx) => idx.name === "email_1");
-  if (!legacyEmailIndex) return;
-  await userCollection.dropIndex("email_1");
-  console.log("Dropped legacy users.email_1 index.");
+  try {
+    const userCollection = mongoose.connection.collection("users");
+    const indexes = await userCollection.indexes();
+    const legacyEmailIndex = indexes.find((idx) => idx.name === "email_1");
+    if (!legacyEmailIndex) return;
+    await userCollection.dropIndex("email_1");
+    console.log("Dropped legacy users.email_1 index.");
+  } catch (err) {
+    if (err && (err.codeName === "NamespaceNotFound" || err.code === 26)) {
+      return;
+    }
+    throw err;
+  }
 }
 
 async function cleanupPlainPasswords() {
@@ -573,6 +581,9 @@ async function cleanupPlainPasswords() {
 }
 
 async function start() {
+  if (process.env.NODE_ENV === "production" && IS_LOCAL_MONGO_URI) {
+    throw new Error("Invalid production MONGODB_URI: localhost is not reachable on Render. Set a hosted MongoDB URI in Render environment variables.");
+  }
   await mongoose.connect(MONGODB_URI);
   await cleanupLegacyUserIndexes();
   await cleanupPlainPasswords();
