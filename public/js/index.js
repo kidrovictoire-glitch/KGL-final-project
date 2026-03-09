@@ -61,6 +61,9 @@ const PRODUCE = ['Beans', 'Grain Maize', 'Cow Peas', 'G-nuts', 'Soybeans'];
 
       try {
         const result = await window.KGLApi.login({ username, password });
+        if (!result || !result.user || !result.user.role || !result.token) {
+          throw new Error('Unexpected login response from server.');
+        }
         const accountRole = normalize(result.user.role);
         localStorage.setItem('token', result.token);
         localStorage.setItem('role', accountRole);

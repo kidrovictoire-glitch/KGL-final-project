@@ -31,7 +31,7 @@
       return data;
     } catch (err) {
       if (err && err.message === "Failed to fetch") {
-        throw new Error("Cannot reach server. Ensure backend is running on localhost:5000.");
+        throw new Error("Cannot reach server. Check your deployment URL or backend availability.");
       }
       throw err;
     }

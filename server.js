@@ -577,7 +577,7 @@ async function start() {
   await cleanupLegacyUserIndexes();
   await cleanupPlainPasswords();
   await seedDefaults();
-  app.listen(PORT, "127.0.0.1", () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`KGL server running on http://localhost:${PORT}`);
   });
 }
